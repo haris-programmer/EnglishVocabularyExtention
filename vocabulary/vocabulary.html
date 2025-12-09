@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Vocabulary</title>
+  <link rel="stylesheet" href="vocabulary.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📚 My Vocabulary List</h1>
+      <button id="exportCsvBtn" class="action-btn">Export to CSV</button>
+      <button id="clearVocabularyBtn" class="action-btn danger">Clear All</button>
+    </header>
+    <main>
+      <div id="vocabularyTableContainer">
+        <table id="vocabularyTable">
+          <thead>
+            <tr>
+              <th>Word</th>
+              <th>Definition</th>
+              <th>Urdu Translation</th>
+              <th>Examples</th>
+            </tr>
+          </thead>
+          <tbody id="vocabularyTableBody">
+            <!-- Vocabulary items will be inserted here -->
+          </tbody>
+        </table>
+      </div>
+      <p id="emptyMessage" style="display: none;">Your vocabulary list is empty. Add words from the extension popup!</p>
+    </main>
+  </div>
+  <script src="vocabulary.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  background-color: #f0f2f5;
+  color: #333;
+}
+
+.container {
+  max-width: 900px; /* Adjusted for wider table */
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 24px;
+  color: #333;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #667eea;
+  color: white;
+  transition: background-color 0.2s;
+}
+
+.action-btn:hover {
+  background-color: #5a6edb;
+}
+
+.action-btn.danger {
+  background-color: #e74c3c;
+  color: white;
+}
+.action-btn.danger:hover {
+  background-color: #c0392b;
+}
+
+#vocabularyTableContainer {
+  overflow-x: auto; /* Enable horizontal scrolling for small screens */
+  margin-top: 20px;
+}
+
+#vocabularyTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+#vocabularyTable th,
+#vocabularyTable td {
+  border: 1px solid #eee;
+  padding: 10px 15px;
+  text-align: left;
+  vertical-align: top;
+}
+
+#vocabularyTable th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #555;
+  white-space: nowrap; /* Prevent headers from wrapping */
+}
+
+#vocabularyTable tbody tr:nth-child(even) {
+  background-color: #fcfcfc;
+}
+
+#vocabularyTable tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+#vocabularyTable td:first-child {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+#emptyMessage {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  padding: 20px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
+  margin-top: 20px;
+}

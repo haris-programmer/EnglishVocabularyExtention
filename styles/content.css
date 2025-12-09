@@ -1,0 +1,10 @@
+.english-helper-highlight {
+  background-color: #ffeb3b !important;
+  padding: 2px !important;
+  border-radius: 3px !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.english-helper-highlight:hover {
+  background-color: #ffc107 !important;
+}

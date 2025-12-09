@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Helper</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🔤 English Helper</h1>
+      <div>
+        <button id="vocabularyBtn" class="settings-btn" title="Vocabulary">📚</button>
+        <button id="settingsBtn" class="settings-btn" title="Settings">⚙️</button>
+      </div>
+    </header>
+    
+    <div id="noSelection" class="no-selection">
+      <p>Select text on any webpage and click this icon or use the context menu to get comprehensive explanations!</p>
+      <div class="instructions">
+        <p><strong>How to use:</strong></p>
+        <ol>
+          <li>Select any English word or phrase on a webpage</li>
+          <li>Right-click and choose "Explain with English Helper" or click this icon</li>
+          <li>Get detailed explanations with context and examples</li>
+        </ol>
+      </div>
+    </div>
+    
+    <div id="selectedTextContainer" class="selected-text" style="display: none;">
+      <h3>Selected Text:</h3>
+      <p id="selectedText"></p>
+      <div class="auto-explain-note">
+        <small>⚡ Getting explanation automatically...</small>
+      </div>
+    </div>
+    
+    <div id="loadingContainer" class="loading" style="display: aine;">
+      <div class="spinner"></div>
+      <p>Getting comprehensive explanation...</p>
+    </div>
+    
+    <div id="errorContainer" class="error" style="display: none;">
+      <h3>⚠️ Error</h3>
+      <p id="errorMessage"></p>
+      <button id="retryBtn" class="retry-btn">Try Again</button>
+    </div>
+
+    <div id="statusContainer" class="status" style="display: none;">
+      <p id="statusMessage"></p>
+    </div>
+    
+    <div id="explanationContainer" class="explanation" style="display: none;">
+      <div id="urduTranslationSection" class="explanation-section">
+        <h3>🌐 Urdu Translation</h3>
+        <p id="urduTranslationText"></p>
+      </div>
+      
+      <div class="actions">
+        <button id="addVocabularyBtn" class="action-btn">Add to Vocabulary</button>
+        <button id="newSearchBtn" class="action-btn secondary">🔍 New Search</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
