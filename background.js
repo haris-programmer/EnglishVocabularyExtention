@@ -51,6 +51,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
   }
   
+  if (request.action === 'lookupDefinition') {
+    lookupDefinition(request.word)
+      .then(definition => sendResponse({ success: true, definition: definition }))
+      .catch(error => sendResponse({ success: false, error: error.message }));
+    return true;
+  }
+  
   if (request.action === 'highlightText') {
     chrome.tabs.sendMessage(sender.tab.id, { action: 'highlightText' });
   }
@@ -142,6 +149,61 @@ async function translateToUrdu(text) {
   } catch (error) {
     console.error('Translation error:', error);
     return 'Translation unavailable';
+  }
+}
+
+async function lookupDefinition(word) {
+  try {
+    console.log('Looking up definition for:', word);
+    // Clean the word - remove extra spaces and convert to lowercase
+    const cleanWord = word.trim().toLowerCase();
+    
+    // Using Dictionary API (free, no API key required)
+    const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${encodeURIComponent(cleanWord)}`;
+    
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    console.log('Dictionary API response status:', response.status);
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        console.warn('Word not found in dictionary');
+        return { error: 'Word not found in dictionary' };
+      }
+      console.warn('Dictionary API failed:', response.statusText);
+      return { error: 'Dictionary lookup failed' };
+    }
+
+    const data = await response.json();
+    console.log('Dictionary API data:', data);
+    
+    // The API returns an array of results
+    if (data && data.length > 0) {
+      const result = data[0];
+      
+      // Extract definitions, examples, synonyms, etc.
+      const formattedData = {
+        word: result.word,
+        phonetic: result.phonetic || result.phonetics?.[0]?.text || '',
+        phonetics: result.phonetics || [],
+        origin: result.origin || '',
+        meanings: result.meanings || []
+      };
+      
+      console.log('Dictionary lookup successful:', formattedData);
+      return formattedData;
+    }
+    
+    console.warn('No definition data in response');
+    return { error: 'No definition found' };
+  } catch (error) {
+    console.error('Dictionary lookup error:', error);
+    return { error: 'Dictionary lookup error: ' + error.message };
   }
 }
 

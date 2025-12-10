@@ -10,9 +10,49 @@
   <div class="container">
     <header>
       <h1>📚 My Vocabulary List</h1>
-      <button id="exportCsvBtn" class="action-btn">Export to CSV</button>
-      <button id="clearVocabularyBtn" class="action-btn danger">Clear All</button>
+      <div class="header-actions">
+        <button id="addWordBtn" class="action-btn">➕ Add New Word</button>
+        <button id="copyToClipboardBtn" class="action-btn">📋 Copy All</button>
+        <button id="exportCsvBtn" class="action-btn">Export to CSV</button>
+        <button id="clearVocabularyBtn" class="action-btn danger">Clear All</button>
+      </div>
     </header>
+    
+    <!-- Add Word Form (Initially Hidden) -->
+    <div id="addWordForm" class="add-word-form" style="display: none;">
+      <h2>Add New Word</h2>
+      <form id="manualWordForm">
+        <div class="form-group">
+          <label for="wordInput">Word *</label>
+          <input type="text" id="wordInput" placeholder="Enter word" required>
+        </div>
+        <div class="form-group">
+          <label for="phoneticInput">Phonetic</label>
+          <input type="text" id="phoneticInput" placeholder="e.g., /həˈləʊ/">
+        </div>
+        <div class="form-group">
+          <label for="partOfSpeechInput">Part of Speech</label>
+          <input type="text" id="partOfSpeechInput" placeholder="e.g., noun, verb, adjective">
+        </div>
+        <div class="form-group">
+          <label for="definitionInput">Definition *</label>
+          <textarea id="definitionInput" rows="3" placeholder="Enter definition" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="urduInput">Urdu Translation</label>
+          <input type="text" id="urduInput" placeholder="اردو ترجمہ">
+        </div>
+        <div class="form-group">
+          <label for="examplesInput">Examples (one per line)</label>
+          <textarea id="examplesInput" rows="3" placeholder="Example sentence 1&#10;Example sentence 2"></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="action-btn">Save Word</button>
+          <button type="button" id="cancelAddBtn" class="action-btn secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+    
     <main>
       <div id="vocabularyTableContainer">
         <table id="vocabularyTable">
@@ -22,6 +62,7 @@
               <th>Definition</th>
               <th>Urdu Translation</th>
               <th>Examples</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody id="vocabularyTableBody">
@@ -29,7 +70,7 @@
           </tbody>
         </table>
       </div>
-      <p id="emptyMessage" style="display: none;">Your vocabulary list is empty. Add words from the extension popup!</p>
+      <p id="emptyMessage" style="display: none;">Your vocabulary list is empty. Add words from the extension popup or click "Add New Word" above!</p>
     </main>
   </div>
   <script src="vocabulary.js"></script>
