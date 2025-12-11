@@ -8,43 +8,29 @@
 </head>
 <body>
   <div class="container">
-    <header>
-      <h1>🔤 English Helper</h1>
-      <div>
-        <button id="vocabularyBtn" class="settings-btn" title="Vocabulary">📚</button>
-        <button id="settingsBtn" class="settings-btn" title="Settings">⚙️</button>
-      </div>
-    </header>
+    <div class="compact-header">
+      <button id="addVocabularyBtn" class="icon-btn add-vocab" title="Add to Vocabulary" style="display: none;">➕</button>
+      <button id="vocabularyBtn" class="icon-btn" title="Vocabulary">📚</button>
+      <button id="settingsBtn" class="icon-btn" title="Settings">⚙️</button>
+    </div>
     
     <div id="noSelection" class="no-selection">
-      <p>Select text on any webpage and click this icon or use the context menu to get comprehensive explanations!</p>
-      <div class="instructions">
-        <p><strong>How to use:</strong></p>
-        <ol>
-          <li>Select any English word or phrase on a webpage</li>
-          <li>Right-click and choose "Explain with English Helper" or click this icon</li>
-          <li>Get detailed explanations with context and examples</li>
-        </ol>
-      </div>
+      <p>Select text on any webpage to get definitions and translations.</p>
     </div>
     
     <div id="selectedTextContainer" class="selected-text" style="display: none;">
-      <h3>Selected Text:</h3>
-      <p id="selectedText"></p>
-      <div class="auto-explain-note">
-        <small>⚡ Getting explanation automatically...</small>
-      </div>
+      <div class="selected-word" id="selectedText"></div>
+      <div class="loading-note">Loading...</div>
     </div>
     
-    <div id="loadingContainer" class="loading" style="display: aine;">
+    <div id="loadingContainer" class="loading" style="display: none;">
       <div class="spinner"></div>
-      <p>Getting comprehensive explanation...</p>
+      <p>Loading...</p>
     </div>
     
     <div id="errorContainer" class="error" style="display: none;">
-      <h3>⚠️ Error</h3>
       <p id="errorMessage"></p>
-      <button id="retryBtn" class="retry-btn">Try Again</button>
+      <button id="retryBtn" class="compact-btn">Retry</button>
     </div>
 
     <div id="statusContainer" class="status" style="display: none;">

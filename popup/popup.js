@@ -27,6 +27,17 @@ document.addEventListener('DOMContentLoaded', async () => {
     chrome.tabs.create({ url: 'vocabulary/vocabulary.html' });
   });
   
+  const addVocabBtn = document.getElementById('addVocabularyBtn');
+  if (addVocabBtn) {
+    addVocabBtn.addEventListener('click', () => {
+      if (currentSelectedText) {
+        addWordToVocabulary(currentSelectedText, currentExplanation || {});
+      } else {
+        showStatus('No text selected', 'error');
+      }
+    });
+  }
+  
   elements.retryBtn.addEventListener('click', () => {
     if (currentSelectedText) {
       explainText(currentSelectedText);
@@ -91,35 +102,36 @@ document.addEventListener('DOMContentLoaded', async () => {
     const explanationContainer = elements.explanationContainer;
     explanationContainer.innerHTML = '';
     
+    // Show add to vocabulary button in header
+    const addVocabBtn = document.getElementById('addVocabularyBtn');
+    if (addVocabBtn) {
+      addVocabBtn.style.display = 'flex';
+    }
+    
     // If dictionary data is available
     if (data.word && data.meanings) {
-      // Create word header with phonetic
+      // Create word header
       const wordHeader = document.createElement('div');
       wordHeader.className = 'word-header';
-      wordHeader.innerHTML = `
-        <h2>${data.word}</h2>
-        ${data.phonetic ? `<div class="phonetic">${data.phonetic}</div>` : ''}
-      `;
+      wordHeader.innerHTML = `<h2>${data.word}</h2>`;
       explanationContainer.appendChild(wordHeader);
       
-      // Display meanings (limit to first 2 definitions per part of speech)
+      // Display meanings (limit to first 2 definitions)
+      let defCount = 0;
       data.meanings.forEach((meaning, index) => {
+        if (defCount >= 2) return;
+        
         const meaningSection = document.createElement('div');
         meaningSection.className = 'meaning-section';
         
-        const partOfSpeech = document.createElement('h3');
-        partOfSpeech.textContent = meaning.partOfSpeech;
-        partOfSpeech.className = 'part-of-speech';
-        meaningSection.appendChild(partOfSpeech);
-        
-        // Display only first 2 definitions
-        const definitionsToShow = meaning.definitions.slice(0, 2);
+        // Display only first 2 definitions total
+        const definitionsToShow = meaning.definitions.slice(0, 2 - defCount);
         definitionsToShow.forEach((def, defIndex) => {
           const defDiv = document.createElement('div');
           defDiv.className = 'definition-item';
           
           const defText = document.createElement('p');
-          defText.innerHTML = `<strong>${defIndex + 1}.</strong> ${def.definition}`;
+          defText.innerHTML = `<strong>${defCount + 1}.</strong> ${def.definition}`;
           defDiv.appendChild(defText);
           
           // Add example if available
@@ -131,6 +143,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           }
           
           meaningSection.appendChild(defDiv);
+          defCount++;
         });
         
         explanationContainer.appendChild(meaningSection);
@@ -146,37 +159,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p id="urduTranslationText">Loading translation...</p>
     `;
     explanationContainer.appendChild(urduSection);
-    
-    // Add action buttons
-    const actionsDiv = document.createElement('div');
-    actionsDiv.className = 'actions';
-    actionsDiv.innerHTML = `
-      <button id="addVocabularyBtn" class="action-btn">Add to Vocabulary</button>
-      <button id="newSearchBtn" class="action-btn secondary">🔍 New Search</button>
-    `;
-    explanationContainer.appendChild(actionsDiv);
-    
-    // Re-attach event listeners for dynamically created buttons
-    setTimeout(() => {
-      const addVocabBtn = document.getElementById('addVocabularyBtn');
-      const newSearchBtnDynamic = document.getElementById('newSearchBtn');
-      
-      if (addVocabBtn) {
-        addVocabBtn.addEventListener('click', () => {
-          if (currentSelectedText) {
-            addWordToVocabulary(currentSelectedText, currentExplanation || {});
-          } else {
-            showStatus('No text selected', 'error');
-          }
-        });
-      }
-      
-      if (newSearchBtnDynamic) {
-        newSearchBtnDynamic.addEventListener('click', () => {
-          showNoSelection();
-        });
-      }
-    }, 0);
     
     // Fetch Urdu translation
     fetchUrduTranslation(currentSelectedText);
@@ -243,6 +225,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     elements.errorContainer.style.display = 'none';
     elements.explanationContainer.style.display = 'none';
     elements.statusContainer.style.display = 'none';
+    const addVocabBtn = document.getElementById('addVocabularyBtn');
+    if (addVocabBtn) {
+      addVocabBtn.style.display = 'none';
+    }
   }
 
   function addWordToVocabulary(text, explanation) {
